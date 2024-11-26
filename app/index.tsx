@@ -1,19 +1,27 @@
+import { View, Text, StyleSheet, ImageBackground } from 'react-native'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 
-export default function HomeScreen() {
+import forestImage from "@/assets/meditation-images/ancient-enchanted-forest.png";
+
+const App = () => {
   return (
+    <View style={styles.container}>
+      <ImageBackground source={forestImage} resizeMode="cover">
 
-    <View className="flex-1 justify-center items-center">
-        <Text>Home Screen</Text>
+        <Text>App</Text>
+      </ImageBackground>
     </View>
   )
 }
 
+export default App
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
+    imageBackground: {
+      flex: 1,
+      resizeMode: "cover",
+  },
     });
