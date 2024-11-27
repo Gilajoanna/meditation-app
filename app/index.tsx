@@ -1,36 +1,36 @@
+import AppGradient from "@/components/AppGradient";
 import CustomButton from "@/components/CustomButton";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const App = () => {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
-      {/* Background Image */}
       <ImageBackground
         source={require("@/assets/meditation-images/ancient-enchanted-forest.png")}
         style={styles.backgroundImage}
       >
-        <LinearGradient
-          colors={["rgba(0, 0, 0, 0.4)", "rgba(0, 0, 0, 0.8)"]}
-          style={styles.gradient}
-        >
-          {/* Overlay content */}
-          <SafeAreaView style={styles.safeArea}>
-            <View>
-              <Text style={styles.titleText}>Simple Meditation</Text>
-              <Text style={styles.subText}>The best meditation is effortless.</Text>
-            </View>
 
-            <View>
-              <CustomButton onPress={() => console.log("Button pressed")} title="Get Started" />
-            </View>
+      <AppGradient colors={["rgba(0, 0, 0, 0.4)", "rgba(0, 0, 0, 0.8)"]}>
+            <SafeAreaView style={styles.safeArea}>
+              <View>
+                <Text style={styles.titleText}>Simple Meditation</Text>
+                <Text style={styles.subText}>The best meditation is effortless.</Text>
+              </View>
 
-            <StatusBar style="light" />
-          </SafeAreaView>
-        </LinearGradient>
+              <View>
+                <CustomButton onPress={() => router.push("/nature-meditate")} title="Get Started" />
+              </View>
+
+              <StatusBar style="light" />
+            </SafeAreaView>
+      </AppGradient>
       </ImageBackground>
     </View>
   );
@@ -51,21 +51,19 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     justifyContent: "space-between",
-    marginHorizontal: 20,
-    marginVertical: 25,
   },
   titleText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 28,
     textAlign: "center",
-    marginVertical: 10,
   },
   subText: {
     color: "white",
     fontWeight: "light",
     fontSize: 14,
     textAlign: "center",
+    paddingTop: 10, 
   },
 });
 

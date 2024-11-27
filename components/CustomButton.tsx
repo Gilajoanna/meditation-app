@@ -25,7 +25,7 @@ export default CustomButton
 
 const styles = StyleSheet.create({
     button: {
-      backgroundColor: "white",
+      backgroundColor: "#153448",
       minHeight: 62,
       justifyContent: "center",
       alignItems: "center",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
       opacity: 0.7,
     },
     buttonText: {
-      color: "black",
+      color: "white",
       fontWeight: "bold",
       fontSize: 16,
     },
