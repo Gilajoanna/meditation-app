@@ -1,4 +1,6 @@
+import CustomButton from "@/components/CustomButton";
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,8 +20,15 @@ const App = () => {
           {/* Overlay content */}
           <SafeAreaView style={styles.safeArea}>
             <View>
-              <Text style={styles.text}>App</Text>
+              <Text style={styles.titleText}>Simple Meditation</Text>
+              <Text style={styles.subText}>The best meditation is effortless.</Text>
             </View>
+
+            <View>
+              <CustomButton onPress={() => console.log("Button pressed")} title="Get Started" />
+            </View>
+
+            <StatusBar style="light" />
           </SafeAreaView>
         </LinearGradient>
       </ImageBackground>
@@ -41,13 +50,21 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 16,
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    marginVertical: 25,
   },
-  text: {
+  titleText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 28,
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  subText: {
+    color: "white",
+    fontWeight: "light",
+    fontSize: 14,
     textAlign: "center",
   },
 });
