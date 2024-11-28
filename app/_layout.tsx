@@ -1,8 +1,15 @@
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-// This component is acts the same as the children prop in React web applications. Renders the child rout in its place.
+// Root layout for the app. Parent of all other layouts.
+// StackLayout displays its children in a stack on top of each other.
 export default function RootLayout() {
     return (
-        <Slot />
+        <SafeAreaProvider>
+            <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+            </Stack>
+        </SafeAreaProvider>
     )
 }

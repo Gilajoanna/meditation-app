@@ -4,6 +4,7 @@ import AppGradient from '@/components/AppGradient'
 import { StatusBar } from 'expo-status-bar'
 import { MEDITATION_DATA } from "@/constants/MeditationData";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const NatureMeditate = () => {
   return (
@@ -23,7 +24,9 @@ const NatureMeditate = () => {
                     <Pressable style={styles.listItem}
                     onPress={() => console.log("Pressed item")}>
                         <ImageBackground source={MEDITATION_IMAGES[item.id -1]} style={styles.listItemImage}>
-                            <Text style={styles.listItemText}>{item.title}</Text>
+                            <LinearGradient colors={["transparent", "rgba(0, 0, 0 , 0.5)"]} style={styles.listItemGradient}>
+                                <Text style={styles.listItemText}>{item.title}</Text>
+                            </LinearGradient>
                         </ImageBackground>
                     </Pressable>
                 )}
@@ -85,6 +88,10 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 24,
         textAlign: "center",
-        //backgroundColor: "rgba(0, 0, 0, 0.2)",
+    },
+    listItemGradient: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
 });

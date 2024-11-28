@@ -1,6 +1,5 @@
 import AppGradient from "@/components/AppGradient";
 import CustomButton from "@/components/CustomButton";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -17,7 +16,7 @@ const App = () => {
         style={styles.backgroundImage}
       >
 
-      <AppGradient colors={["rgba(0, 0, 0, 0.4)", "rgba(0, 0, 0, 0.8)"]}>
+      <AppGradient colors={["rgba(0, 0, 0, 0.2)", "rgba(0, 0, 0, 0.6)"]}>
             <SafeAreaView style={styles.safeArea}>
               <View>
                 <Text style={styles.titleText}>Simple Meditation</Text>
