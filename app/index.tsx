@@ -6,6 +6,7 @@ import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// Entry point of the app.
 const App = () => {
   const router = useRouter();
 

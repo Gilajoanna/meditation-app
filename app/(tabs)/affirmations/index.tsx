@@ -4,15 +4,20 @@ import AppGradient from "@/components/AppGradient";
 import AFFIRMATION_GALLERY from "@/constants/affirmation-gallery";
 import AffirmationsGallery from "@/components/AffirmationsGallery";
 
+// UI and functionality for affirmations screen
 const Affirmations = () => {
   return (
     <View style={styles.container}>
       <AppGradient colors={["#3B1C32", "#6A1E55", "#A64D79"]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+        >
           <Text style={styles.titleText}>
             Shift your way of thinking with affirmations.
           </Text>
           <View>
+            {/* Mapping over the affirmation gallery data to render affirmation galleries. */}
             {AFFIRMATION_GALLERY.map((gallery) => (
               <AffirmationsGallery
                 key={gallery.title}
