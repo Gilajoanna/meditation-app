@@ -3,6 +3,7 @@ import { Tabs } from "expo-router";
 import Colors from "@/constants/Colors";
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
+// Sets up the tab navigation for the app.
 const TabsLayout = () => {
   return (
     <Tabs
