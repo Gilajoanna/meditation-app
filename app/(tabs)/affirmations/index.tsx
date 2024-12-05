@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import AppGradient from "@/components/AppGradient";
 import AFFIRMATION_GALLERY from "@/constants/affirmation-gallery";
@@ -7,13 +7,13 @@ import AffirmationsGallery from "@/components/AffirmationsGallery";
 // UI and functionality for affirmations screen
 const Affirmations = () => {
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       <AppGradient colors={["#2A3335", "#5A6C57", "#85A98F", "#D3F1DF"]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }}
         >
-          <Text style={styles.titleText}>
+          <Text className="text-white font-bold text-3xl mt-5 mb-7 opacity-80">
             Shift your way of thinking with affirmations.
           </Text>
           <View>
@@ -33,17 +33,3 @@ const Affirmations = () => {
 };
 
 export default Affirmations;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  titleText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 28,
-    textAlign: "left",
-    marginBottom: 5,
-    opacity: 0.8,
-  },
-});

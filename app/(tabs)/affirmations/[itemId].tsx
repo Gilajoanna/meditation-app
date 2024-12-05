@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Pressable,
-} from "react-native";
+import { View, Text, ImageBackground, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { GalleryPreviewData } from "@/constants/models/AffirmationCategory";
@@ -39,18 +33,24 @@ const AffirmationPractice = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       <ImageBackground
         source={affirmation?.image}
-        style={styles.backgroundImage}
+        resizeMode="cover"
+        className="flex-1 h-full w-full"
       >
         <AppGradient colors={["rgba(0, 0, 0, 0.2)", "rgba(0, 0, 0, 0.7)"]}>
-          <Pressable onPress={() => router.back()}>
+          <Pressable
+            onPress={() => router.back()}
+            className="absolute top-16 left-6 z-10"
+          >
             <AntDesign name="arrowleft" size={32} color="white" />
           </Pressable>
 
-          <View style={styles.textContainer}>
-            <Text>{affirmation?.text}</Text>
+          <View className="h-4/5 justify-center">
+            <Text className="text-white text-2xl font-bold text-center">
+              {affirmation?.text}
+            </Text>
           </View>
         </AppGradient>
       </ImageBackground>
@@ -59,30 +59,3 @@ const AffirmationPractice = () => {
 };
 
 export default AffirmationPractice;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-  backButton: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-  },
-  textContainer: {
-    height: "75%",
-    justifyContent: "center",
-  },
-  affirmationText: {
-    color: "white",
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: 20,
-  },
-});
