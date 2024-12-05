@@ -15,35 +15,39 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const NatureMeditate = () => {
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       <AppGradient colors={["#161b2e", "#344C64", "#577B8D", "#57A6A1"]}>
-        <View style={styles.textContainer}>
-          <Text style={styles.titleText}>Welcome, Gila</Text>
-          <Text style={styles.subText}>
+        <View className="mt-5 mb-5">
+          <Text className="text-white text-3xl font-bold mb-2 opacity-80">
+            Welcome, Gila
+          </Text>
+          <Text className="text-white text-lg font-medium opacity-80">
             Begin your meditation journey today.
           </Text>
         </View>
 
         <View>
           <FlatList
-            style={styles.list}
+            className="mt-3 mb-5"
             showsVerticalScrollIndicator={false}
             data={MEDITATION_DATA}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <Pressable
-                style={styles.listItem}
+                className="flex-1 h-48 my-3 mx-1 rounded-xl overflow-hidden border border-white"
                 onPress={() => console.log("Pressed item")}
               >
                 <ImageBackground
                   source={MEDITATION_IMAGES[item.id - 1]}
-                  style={styles.listItemImage}
+                  className="flex-1 h-full w-full justify-center"
                 >
                   <LinearGradient
                     colors={["transparent", "rgba(0, 0, 0 , 0.5)"]}
                     style={styles.listItemGradient}
                   >
-                    <Text style={styles.listItemText}>{item.title}</Text>
+                    <Text className="text-white font-bold text-2xl">
+                      {item.title}
+                    </Text>
                   </LinearGradient>
                 </ImageBackground>
               </Pressable>
@@ -60,53 +64,6 @@ const NatureMeditate = () => {
 export default NatureMeditate;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  textContainer: {
-    marginTop: 15,
-    marginBottom: 5,
-  },
-  titleText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 28,
-    textAlign: "left",
-    marginBottom: 5,
-    opacity: 0.8,
-  },
-  subText: {
-    color: "white",
-    fontWeight: "medium",
-    fontSize: 16,
-    textAlign: "left",
-    opacity: 0.8,
-  },
-  list: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  listItem: {
-    flex: 1,
-    height: 200,
-    borderRadius: 10,
-    overflow: "hidden",
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "white",
-  },
-  listItemImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  listItemText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 24,
-    textAlign: "center",
-  },
   listItemGradient: {
     flex: 1,
     justifyContent: "center",
