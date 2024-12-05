@@ -10,6 +10,13 @@ const TabsLayout = () => {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: Colors.primary,
+        tabBarStyle: {
+          position: "absolute",
+          overflow: "hidden",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          opacity: 0.9,
+        },
       }}
     >
       <Tabs.Screen

@@ -8,7 +8,7 @@ import AffirmationsGallery from "@/components/AffirmationsGallery";
 const Affirmations = () => {
   return (
     <View style={styles.container}>
-      <AppGradient colors={["#3B1C32", "#6A1E55", "#A64D79"]}>
+      <AppGradient colors={["#2A3335", "#5A6C57", "#85A98F", "#D3F1DF"]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }}
