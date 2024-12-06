@@ -29,7 +29,7 @@ const App = () => {
 
             <View>
               <CustomButton
-                onPress={() => router.push("/nature-meditate")}
+                onPress={() => router.push("/home-screen")}
                 title="Get Started"
               />
             </View>

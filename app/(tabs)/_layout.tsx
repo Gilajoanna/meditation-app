@@ -20,11 +20,21 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="nature-meditate"
+        name="meditate"
         options={{
           tabBarLabel: "Meditate",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="meditation" size={34} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="home-screen"
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="hand-holding-heart" size={24} color={color} />
           ),
         }}
       />
