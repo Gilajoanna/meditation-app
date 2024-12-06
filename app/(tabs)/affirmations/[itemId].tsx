@@ -13,6 +13,7 @@ const AffirmationPractice = () => {
   const { itemId } = useLocalSearchParams();
 
   const [affirmation, setAffirmation] = useState<GalleryPreviewData>();
+  const [affirmationSentences, setAffirmationSentences] = useState<string[]>();
 
   useEffect(() => {
     // Loops through affirmation gallery. Each item represents a category with affirmations.
@@ -21,12 +22,22 @@ const AffirmationPractice = () => {
     for (let i = 0; i < AFFIRMATION_GALLERY.length; i++) {
       const affirmationData = AFFIRMATION_GALLERY[i].data;
 
-      const affirmationToStart = affirmationData.find(
+      const chosenAffirmation = affirmationData.find(
         (affirmation) => affirmation.id === Number(itemId)
       );
 
-      if (affirmationToStart) {
-        setAffirmation(affirmationToStart);
+      if (chosenAffirmation) {
+        setAffirmation(chosenAffirmation);
+        // Split the affirmation text by period to create an array of sentences.
+        const affirmationsTextArray = chosenAffirmation.text.split(".");
+        //console.log(affirmationsTextArray);
+
+        // Remove the last element if it is an empty string.
+        if (affirmationsTextArray[affirmationsTextArray.length - 1] === "") {
+          affirmationsTextArray.pop();
+        }
+
+        setAffirmationSentences(affirmationsTextArray);
         return;
       }
     }
@@ -47,10 +58,17 @@ const AffirmationPractice = () => {
             <AntDesign name="arrowleft" size={32} color="white" />
           </Pressable>
 
-          <View className="h-4/5 justify-center">
-            <Text className="text-white text-2xl font-bold text-center">
-              {affirmation?.text}
-            </Text>
+          <View className="h-full justify-center">
+            <View className="h-4/5 justify-center">
+              {affirmationSentences?.map((sentence, index) => (
+                <Text
+                  key={index}
+                  className="text-white text-2xl font-bold text-center mb-16"
+                >
+                  {sentence}.
+                </Text>
+              ))}
+            </View>
           </View>
         </AppGradient>
       </ImageBackground>
