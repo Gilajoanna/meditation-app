@@ -12,8 +12,9 @@ import { StatusBar } from "expo-status-bar";
 import { MEDITATION_DATA } from "@/constants/MeditationData";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 
-const NatureMeditate = () => {
+const Meditate = () => {
   return (
     <View className="flex-1">
       <AppGradient colors={["#161b2e", "#344C64", "#577B8D", "#57A6A1"]}>
@@ -35,7 +36,7 @@ const NatureMeditate = () => {
             renderItem={({ item }) => (
               <Pressable
                 className="flex-1 h-48 my-3 mx-1 rounded-xl overflow-hidden border border-white"
-                onPress={() => console.log("Pressed item")}
+                onPress={() => router.push(`/meditate/${item.id}`)}
               >
                 <ImageBackground
                   source={MEDITATION_IMAGES[item.id - 1]}
@@ -61,7 +62,7 @@ const NatureMeditate = () => {
   );
 };
 
-export default NatureMeditate;
+export default Meditate;
 
 const styles = StyleSheet.create({
   listItemGradient: {

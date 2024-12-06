@@ -14,3 +14,9 @@ export default function RootLayout() {
     </SafeAreaProvider>
   );
 }
+
+/*      <Stack.Screen
+name="meditate/[itemId]"
+options={{ headerShown: false }}
+/>
+*/
