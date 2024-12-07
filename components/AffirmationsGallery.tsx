@@ -20,7 +20,9 @@ const AffirmationsGallery = ({ title, previews }: AffirmationsGalleryProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.titleText}>{title}</Text>
+        <Text className="text-white text-xl font-montsR">
+          {title.toLocaleUpperCase()}
+        </Text>
       </View>
       <View style={styles.listView}>
         <FlatList
@@ -52,12 +54,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginBottom: 10,
-  },
-  titleText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    opacity: 0.8,
   },
   listView: {
     flexDirection: "row",

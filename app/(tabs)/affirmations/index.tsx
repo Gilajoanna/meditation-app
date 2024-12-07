@@ -13,8 +13,8 @@ const Affirmations = () => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }}
         >
-          <Text className="text-white font-bold text-3xl mt-5 mb-7 opacity-80">
-            Shift your way of thinking with affirmations.
+          <Text className="text-white text-2xl mt-5 mb-7 opacity-80 font-montsSB">
+            SHIFT YOUR WAY OF THINKING WITH AFFIRMATIONS.
           </Text>
           <View>
             {/* Mapping over the affirmation gallery data to render affirmation galleries. */}
