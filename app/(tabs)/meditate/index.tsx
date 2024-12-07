@@ -19,10 +19,10 @@ const Meditate = () => {
     <View className="flex-1">
       <AppGradient colors={["#161b2e", "#344C64", "#577B8D", "#57A6A1"]}>
         <View className="mt-5 mb-5">
-          <Text className="text-white text-3xl font-bold mb-2 opacity-80">
-            Welcome, Gila
+          <Text className="text-white text-3xl mb-2 opacity-80 font-montsSB">
+            WELCOME, GILA
           </Text>
-          <Text className="text-white text-lg font-medium opacity-80">
+          <Text className="text-white text-lg font-medium opacity-80 font-montsR">
             Begin your meditation journey today.
           </Text>
         </View>
@@ -46,8 +46,8 @@ const Meditate = () => {
                     colors={["transparent", "rgba(0, 0, 0 , 0.5)"]}
                     style={styles.listItemGradient}
                   >
-                    <Text className="text-white font-bold text-2xl">
-                      {item.title}
+                    <Text className="text-white font-bold text-2xl font-montsR">
+                      {item.title.toLocaleUpperCase()}
                     </Text>
                   </LinearGradient>
                 </ImageBackground>

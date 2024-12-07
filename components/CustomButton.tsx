@@ -18,11 +18,10 @@ const CustomButton = ({
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={styles.button}
-      className={containerStyles}
+      className={`bg-white h-16 rounded-3xl justify-center items-center opacity-80 ${containerStyles}`}
       onPress={onPress}
     >
-      <Text style={styles.buttonText} className={textStyles}>
+      <Text className={`text-black font-bold text-lg ${textStyles}`}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -30,19 +29,3 @@ const CustomButton = ({
 };
 
 export default CustomButton;
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "white",
-    minHeight: 62,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-});

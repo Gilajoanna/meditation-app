@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack } from "expo-router";
 
-// Configures the layout for nested screens within the Affirmations folder.
+// Configures the layout for nested screens within the Meditation folder.
 const MeditateLayout = () => {
   return (
     <Stack>
