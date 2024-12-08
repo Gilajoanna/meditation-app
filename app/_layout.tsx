@@ -39,6 +39,10 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="meditate/[itemId]"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </SafeAreaProvider>
   );
