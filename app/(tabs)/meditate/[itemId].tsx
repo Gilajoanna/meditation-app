@@ -32,6 +32,16 @@ const Meditate = () => {
     return () => clearTimeout(timerId);
   }, [secondsRemaining, isMeditating]);
 
+  // Formatting the secondsRemaining to display in the format of MM:SS.
+  // Divides the total seconds by 60 to get the number of full minutes.
+  // Uses Math.floor() to round down to the nearest whole number
+  // If it’s less than 2 digits, it adds a 0 to start using padStart().
+  const formattedMinutes = String(Math.floor(secondsRemaining / 60)).padStart(
+    2,
+    "0"
+  );
+  const formattedSeconds = String(secondsRemaining % 60).padStart(2, "0");
+
   return (
     <View className="flex-1">
       <ImageBackground
@@ -51,7 +61,7 @@ const Meditate = () => {
           <View className="flex-1 justify-center">
             <View className="mx-auto bg-neutral-200 rounded-full h-44 w-44 justify-center items-center opacity-80">
               <Text className="text-4xl text-gray-900">
-                00:{secondsRemaining}
+                {formattedMinutes}:{formattedSeconds}
               </Text>
             </View>
 
