@@ -9,7 +9,7 @@ import {
 import React from "react";
 import AppGradient from "@/components/AppGradient";
 import { StatusBar } from "expo-status-bar";
-import { MEDITATION_DATA } from "@/constants/MeditationData";
+import { MEDITATION_DATA } from "@/constants/models/MeditationData";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";

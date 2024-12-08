@@ -5,16 +5,25 @@ import AppGradient from "@/components/AppGradient";
 import { router, useLocalSearchParams } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
+import { Audio } from "expo-av";
+import {
+  MEDITATION_DATA,
+  AUDIO_FILES,
+} from "@/constants/models/MeditationData";
 
 // Dynamic route for meditation detail screen. Different for each meditation item.
 const Meditate = () => {
   const { itemId } = useLocalSearchParams();
   const [secondsRemaining, setSecondsRemaining] = useState(10);
   const [isMeditating, setMeditating] = useState(false);
+  const [audioSound, setAudioSound] = useState<Audio.Sound>();
+  const [isAudioPlaying, setAudioPlaying] = useState(false);
+
+  /******** TIMER FUNCTIONALITY */
 
   // Runs whenever the secondsRemaining state changes.
   // When isMeditating is true we set this timer to update the state every second and decrease the secondsRemaining by 1.
-  // When the secondsRemaining reaches 0, the timer stops and isMeditating is false. Same if user leaves the screen.
+  // When the secondsRemaining reaches 0, the timer stops and isMeditating is false. Same if user leaves the screen(FOR NOW ONLY WHEN USING BACK BUTTON).
   useEffect(() => {
     let timerId: NodeJS.Timeout;
 
@@ -32,6 +41,19 @@ const Meditate = () => {
     return () => clearTimeout(timerId);
   }, [secondsRemaining, isMeditating]);
 
+  const toggleMeditationSession = async () => {
+    if (secondsRemaining === 0) setSecondsRemaining(10);
+    setMeditating(!isMeditating);
+    await toggleAudioSound();
+    console.log(isMeditating);
+  };
+
+  useEffect(() => {
+    return () => {
+      audioSound?.unloadAsync();
+    };
+  }, [audioSound]);
+
   // Formatting the secondsRemaining to display in the format of MM:SS.
   // Divides the total seconds by 60 to get the number of full minutes.
   // Uses Math.floor() to round down to the nearest whole number
@@ -41,6 +63,30 @@ const Meditate = () => {
     "0"
   );
   const formattedSeconds = String(secondsRemaining % 60).padStart(2, "0");
+
+  /******** AUDIO FUNCTIONALITY */
+
+  const toggleAudioSound = async () => {
+    const sound = audioSound ? audioSound : await initializeAudioSound();
+    const status = await sound.getStatusAsync();
+
+    if (status.isLoaded && !isAudioPlaying) {
+      await sound.playAsync();
+      setAudioPlaying(true);
+    } else {
+      await sound.pauseAsync();
+      setAudioPlaying(false);
+    }
+  };
+
+  const initializeAudioSound = async () => {
+    const audioFileName = MEDITATION_DATA[Number(itemId) - 1].audio;
+
+    const { sound } = await Audio.Sound.createAsync(AUDIO_FILES[audioFileName]);
+
+    setAudioSound(sound);
+    return sound;
+  };
 
   return (
     <View className="flex-1">
@@ -68,7 +114,7 @@ const Meditate = () => {
             <View className="mt-10">
               <CustomButton
                 title="Start Meditation"
-                onPress={() => setMeditating(true)}
+                onPress={toggleMeditationSession}
                 containerStyles="mb-5"
               />
             </View>
