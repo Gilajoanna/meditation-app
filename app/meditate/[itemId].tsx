@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, Pressable } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
 import AppGradient from "@/components/AppGradient";
 import { router, useLocalSearchParams } from "expo-router";
@@ -10,62 +10,28 @@ import {
   MEDITATION_DATA,
   AUDIO_FILES,
 } from "@/constants/models/MeditationData";
-import { TimerContext } from "@/context/TimerContext";
+import useMeditationTimer from "@/hooks/useMeditationTimer";
 
 // Dynamic route for meditation detail screen. Different for each meditation item.
 const MeditationPractice = () => {
   const { itemId } = useLocalSearchParams();
-  const { duration: secondsRemaining, setDuration } = useContext(TimerContext);
-  //const [secondsRemaining, setSecondsRemaining] = useState(10);
-  const [isMeditating, setMeditating] = useState(false);
+  const {
+    duration,
+    isMeditating,
+    toggleMeditationSession,
+    resetTimer,
+    formattedMinutes,
+    formattedSeconds,
+  } = useMeditationTimer(30);
+
   const [audioSound, setAudioSound] = useState<Audio.Sound>();
   const [isAudioPlaying, setAudioPlaying] = useState(false);
 
-  /******** TIMER FUNCTIONALITY */
-
-  // Runs whenever the secondsRemaining state changes.
-  // When isMeditating is true we set this timer to update the state every second and decrease the secondsRemaining by 1.
-  // When the secondsRemaining reaches 0, the timer stops and isMeditating is false. Same if user leaves the screen(FOR NOW ONLY WHEN USING BACK BUTTON).
-  useEffect(() => {
-    let timerId: NodeJS.Timeout;
-
-    if (secondsRemaining === 0) {
-      setMeditating(false);
-      return;
-    }
-
-    if (isMeditating) {
-      timerId = setTimeout(() => {
-        setDuration(secondsRemaining - 1);
-      }, 1000); // Passing 1000ms (1 second) to update the state every second.
-    }
-
-    return () => clearTimeout(timerId);
-  }, [secondsRemaining, isMeditating]);
-
-  const toggleMeditationSession = async () => {
-    if (secondsRemaining === 0) setDuration(30);
-    setMeditating(!isMeditating);
+  const handleToggleMeditation = async () => {
+    toggleMeditationSession();
     await toggleAudioSound();
     console.log(isMeditating);
   };
-
-  useEffect(() => {
-    return () => {
-      setDuration(30);
-      audioSound?.unloadAsync();
-    };
-  }, [audioSound]);
-
-  // Formatting the secondsRemaining to display in the format of MM:SS.
-  // Divides the total seconds by 60 to get the number of full minutes.
-  // Uses Math.floor() to round down to the nearest whole number
-  // If it’s less than 2 digits, it adds a 0 to start using padStart().
-  const formattedMinutes = String(Math.floor(secondsRemaining / 60)).padStart(
-    2,
-    "0"
-  );
-  const formattedSeconds = String(secondsRemaining % 60).padStart(2, "0");
 
   /******** AUDIO FUNCTIONALITY */
 
@@ -93,11 +59,18 @@ const MeditationPractice = () => {
 
   const handleAdjustDuration = () => {
     if (isMeditating) {
-      toggleMeditationSession();
+      handleToggleMeditation();
     }
 
     router.push("/adjust-meditation-duration");
   };
+
+  useEffect(() => {
+    return () => {
+      resetTimer();
+      audioSound?.unloadAsync();
+    };
+  }, [audioSound]);
 
   return (
     <View className="flex-1">
@@ -131,7 +104,7 @@ const MeditationPractice = () => {
             />
             <CustomButton
               title={isMeditating ? "Stop Meditation" : "Start Meditation"}
-              onPress={toggleMeditationSession}
+              onPress={handleToggleMeditation}
               containerStyles="mb-5"
             />
           </View>
