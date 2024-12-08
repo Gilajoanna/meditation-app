@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
 import AppGradient from "@/components/AppGradient";
 import { router, useLocalSearchParams } from "expo-router";
@@ -10,11 +10,13 @@ import {
   MEDITATION_DATA,
   AUDIO_FILES,
 } from "@/constants/models/MeditationData";
+import { TimerContext } from "@/context/TimerContext";
 
 // Dynamic route for meditation detail screen. Different for each meditation item.
-const Meditate = () => {
+const MeditationPractice = () => {
   const { itemId } = useLocalSearchParams();
-  const [secondsRemaining, setSecondsRemaining] = useState(10);
+  const { duration: secondsRemaining, setDuration } = useContext(TimerContext);
+  //const [secondsRemaining, setSecondsRemaining] = useState(10);
   const [isMeditating, setMeditating] = useState(false);
   const [audioSound, setAudioSound] = useState<Audio.Sound>();
   const [isAudioPlaying, setAudioPlaying] = useState(false);
@@ -34,7 +36,7 @@ const Meditate = () => {
 
     if (isMeditating) {
       timerId = setTimeout(() => {
-        setSecondsRemaining(secondsRemaining - 1);
+        setDuration(secondsRemaining - 1);
       }, 1000); // Passing 1000ms (1 second) to update the state every second.
     }
 
@@ -42,7 +44,7 @@ const Meditate = () => {
   }, [secondsRemaining, isMeditating]);
 
   const toggleMeditationSession = async () => {
-    if (secondsRemaining === 0) setSecondsRemaining(10);
+    if (secondsRemaining === 0) setDuration(30);
     setMeditating(!isMeditating);
     await toggleAudioSound();
     console.log(isMeditating);
@@ -50,6 +52,7 @@ const Meditate = () => {
 
   useEffect(() => {
     return () => {
+      setDuration(30);
       audioSound?.unloadAsync();
     };
   }, [audioSound]);
@@ -88,6 +91,14 @@ const Meditate = () => {
     return sound;
   };
 
+  const handleAdjustDuration = () => {
+    if (isMeditating) {
+      toggleMeditationSession();
+    }
+
+    router.push("/adjust-meditation-duration");
+  };
+
   return (
     <View className="flex-1">
       <ImageBackground
@@ -106,18 +117,23 @@ const Meditate = () => {
           {/* Countdown timer for meditation */}
           <View className="flex-1 justify-center">
             <View className="mx-auto bg-neutral-200 rounded-full h-44 w-44 justify-center items-center opacity-80">
-              <Text className="text-4xl text-gray-900">
+              <Text className="text-4xl text-gray-900 font-montsR">
                 {formattedMinutes}:{formattedSeconds}
               </Text>
             </View>
+          </View>
 
-            <View className="mt-10">
-              <CustomButton
-                title="Start Meditation"
-                onPress={toggleMeditationSession}
-                containerStyles="mb-5"
-              />
-            </View>
+          <View>
+            <CustomButton
+              title="Adjust Duration"
+              onPress={handleAdjustDuration}
+              containerStyles="mb-5"
+            />
+            <CustomButton
+              title={isMeditating ? "Stop Meditation" : "Start Meditation"}
+              onPress={toggleMeditationSession}
+              containerStyles="mb-5"
+            />
           </View>
         </AppGradient>
       </ImageBackground>
@@ -125,4 +141,4 @@ const Meditate = () => {
   );
 };
 
-export default Meditate;
+export default MeditationPractice;

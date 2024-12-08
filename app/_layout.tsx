@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import TimerProvider from "@/context/TimerContext";
 
 // Root layout for the app. Wrapper for all screens, sets root navigation.
 // StackLayout displays its children in a stack on top of each other.
@@ -35,15 +36,22 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <SafeAreaProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="meditate/[itemId]"
-          options={{ headerShown: false }}
-        />
-      </Stack>
-    </SafeAreaProvider>
+    // Wrap with TimerProvider context to manage the timer state.
+    <TimerProvider>
+      <SafeAreaProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="meditate/[itemId]"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(modal)/adjust-meditation-duration"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
+        </Stack>
+      </SafeAreaProvider>
+    </TimerProvider>
   );
 }
