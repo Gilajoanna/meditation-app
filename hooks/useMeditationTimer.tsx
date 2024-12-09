@@ -1,5 +1,5 @@
 import { TimerContext } from "@/context/TimerContext";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const useMeditationTimer = (defaultDuration: number) => {
   const { duration, setDuration } = useContext(TimerContext);
@@ -11,6 +11,7 @@ const useMeditationTimer = (defaultDuration: number) => {
 
     // When the secondsRemaining reaches 0, the timer stops and isMeditating is false. Same if user leaves the screen.
     if (duration === 0) {
+      console.log("IS DURATION 0???:", duration);
       setMeditating(false);
       return;
     }
@@ -27,12 +28,15 @@ const useMeditationTimer = (defaultDuration: number) => {
 
   const toggleMeditationSession = () => {
     if (duration === 0) setDuration(30);
+    console.log("TOGGLE MEDITATION SESSION 1:", duration);
     setMeditating(!isMeditating);
     console.log(isMeditating);
+    console.log("TOGGLE MEDITATION SESSION 2:", duration);
   };
 
   // Resets the timer to the default duration for example when user leaves the screen.
   const resetTimer = () => setDuration(30);
+  console.log("Duration: ", duration);
 
   // Formatting the secondsRemaining to display in the format of MM:SS.
   // Divides the total seconds by 60 to get the number of full minutes.
@@ -44,6 +48,7 @@ const useMeditationTimer = (defaultDuration: number) => {
   return {
     duration,
     isMeditating,
+    setMeditating,
     toggleMeditationSession,
     resetTimer,
     formattedMinutes,
