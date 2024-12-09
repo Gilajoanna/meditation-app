@@ -11,6 +11,7 @@ import {
   AUDIO_FILES,
 } from "@/constants/models/MeditationData";
 import useMeditationTimer from "@/hooks/useMeditationTimer";
+import useMeditationAudio from "@/hooks/useMeditationAudio";
 
 // Dynamic route for meditation detail screen. Different for each meditation item.
 const MeditationPractice = () => {
@@ -18,49 +19,45 @@ const MeditationPractice = () => {
   const {
     duration,
     isMeditating,
+    setMeditating,
     toggleMeditationSession,
     resetTimer,
     formattedMinutes,
     formattedSeconds,
   } = useMeditationTimer(30);
 
-  const [audioSound, setAudioSound] = useState<Audio.Sound>();
-  const [isAudioPlaying, setAudioPlaying] = useState(false);
+  const audioFileName = MEDITATION_DATA[Number(itemId) - 1].audio;
+  const {
+    toggleAudioSound,
+    isAudioPlaying,
+    setAudioPlaying,
+    audioSound,
+    stopAudioSound,
+  } = useMeditationAudio(AUDIO_FILES[audioFileName]);
+
+  useEffect(() => {
+    if (duration === 0 || !isMeditating) {
+      console.log("IS DURATION 0???:", duration);
+      if (isAudioPlaying) audioSound?.pauseAsync();
+      setMeditating(false);
+      setAudioPlaying(false);
+      return;
+    }
+  }, [duration, audioSound]);
 
   const handleToggleMeditation = async () => {
+    console.log("HANDLE TOGGLE MEDITATION 1:", duration);
     toggleMeditationSession();
     await toggleAudioSound();
-    console.log(isMeditating);
-  };
-
-  /******** AUDIO FUNCTIONALITY */
-
-  const toggleAudioSound = async () => {
-    const sound = audioSound ? audioSound : await initializeAudioSound();
-    const status = await sound.getStatusAsync();
-
-    if (status.isLoaded && !isAudioPlaying) {
-      await sound.playAsync();
-      setAudioPlaying(true);
-    } else {
-      await sound.pauseAsync();
-      setAudioPlaying(false);
-    }
-  };
-
-  const initializeAudioSound = async () => {
-    const audioFileName = MEDITATION_DATA[Number(itemId) - 1].audio;
-
-    const { sound } = await Audio.Sound.createAsync(AUDIO_FILES[audioFileName]);
-
-    setAudioSound(sound);
-    return sound;
+    //console.log("HANDLE TOGGLE MEDITATION 2:", duration);
   };
 
   const handleAdjustDuration = () => {
     if (isMeditating) {
-      handleToggleMeditation();
+      console.log("HANDLE ADJUST DURATION 1:", duration);
+      toggleMeditationSession();
     }
+    console.log("HANDLE ADJUST DURATION 3:", duration);
 
     router.push("/adjust-meditation-duration");
   };
@@ -68,9 +65,10 @@ const MeditationPractice = () => {
   useEffect(() => {
     return () => {
       resetTimer();
-      audioSound?.unloadAsync();
+      stopAudioSound();
+      console.log("USEFFECT WITH RESEST TIMER", duration);
     };
-  }, [audioSound]);
+  }, []);
 
   return (
     <View className="flex-1">
