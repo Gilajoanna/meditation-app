@@ -9,6 +9,7 @@ const useMeditationAudio = (audioFileName: any) => {
     const { sound } = await Audio.Sound.createAsync(audioFileName);
 
     setAudioSound(sound);
+    //console.log("Here the sound is initialized:", sound);
     return sound;
   };
 
@@ -25,15 +26,9 @@ const useMeditationAudio = (audioFileName: any) => {
     }
   };
 
-  const stopAudioSound = async () => {
-    await audioSound?.unloadAsync();
-    setAudioSound(undefined);
-  };
-
   return {
     toggleAudioSound,
     isAudioPlaying,
-    stopAudioSound,
     audioSound,
     setAudioPlaying,
   };

@@ -1,11 +1,10 @@
 import { View, Text, ImageBackground, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
 import AppGradient from "@/components/AppGradient";
 import { router, useLocalSearchParams } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
-import { Audio } from "expo-av";
 import {
   MEDITATION_DATA,
   AUDIO_FILES,
@@ -16,6 +15,7 @@ import useMeditationAudio from "@/hooks/useMeditationAudio";
 // Dynamic route for meditation detail screen. Different for each meditation item.
 const MeditationPractice = () => {
   const { itemId } = useLocalSearchParams();
+
   const {
     duration,
     isMeditating,
@@ -27,17 +27,12 @@ const MeditationPractice = () => {
   } = useMeditationTimer(30);
 
   const audioFileName = MEDITATION_DATA[Number(itemId) - 1].audio;
-  const {
-    toggleAudioSound,
-    isAudioPlaying,
-    setAudioPlaying,
-    audioSound,
-    stopAudioSound,
-  } = useMeditationAudio(AUDIO_FILES[audioFileName]);
+  const { toggleAudioSound, isAudioPlaying, setAudioPlaying, audioSound } =
+    useMeditationAudio(AUDIO_FILES[audioFileName]);
 
   useEffect(() => {
     if (duration === 0 || !isMeditating) {
-      console.log("IS DURATION 0???:", duration);
+      //console.log("IS DURATION 0:", duration);
       if (isAudioPlaying) audioSound?.pauseAsync();
       setMeditating(false);
       setAudioPlaying(false);
@@ -46,18 +41,14 @@ const MeditationPractice = () => {
   }, [duration, audioSound]);
 
   const handleToggleMeditation = async () => {
-    console.log("HANDLE TOGGLE MEDITATION 1:", duration);
     toggleMeditationSession();
     await toggleAudioSound();
-    //console.log("HANDLE TOGGLE MEDITATION 2:", duration);
   };
 
   const handleAdjustDuration = () => {
     if (isMeditating) {
-      console.log("HANDLE ADJUST DURATION 1:", duration);
       toggleMeditationSession();
     }
-    console.log("HANDLE ADJUST DURATION 3:", duration);
 
     router.push("/adjust-meditation-duration");
   };
@@ -65,8 +56,7 @@ const MeditationPractice = () => {
   useEffect(() => {
     return () => {
       resetTimer();
-      stopAudioSound();
-      console.log("USEFFECT WITH RESEST TIMER", duration);
+      //console.log("USEFFECT WITH RESEST TIMER", duration);
     };
   }, []);
 
@@ -79,7 +69,12 @@ const MeditationPractice = () => {
       >
         <AppGradient colors={["transparent", "rgba(0,0,0,0.8)"]}>
           <Pressable
-            onPress={() => router.back()}
+            onPress={async () => {
+              if (isAudioPlaying) {
+                await toggleAudioSound();
+              }
+              router.back();
+            }}
             className="absolute top-16 left-6 z-10"
           >
             <AntDesign name="arrowleft" size={32} color="white" />
